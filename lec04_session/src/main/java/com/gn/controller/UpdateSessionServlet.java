@@ -1,29 +1,30 @@
-package com.cookie.controller;
+package com.gn.controller;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 
-@WebServlet("/removeNick")
-public class RemoveNickServlet extends HttpServlet {
+@WebServlet("/updateSession")
+public class UpdateSessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public RemoveNickServlet() {
+    public UpdateSessionServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// 삭제할 쿠키의 키값을 가지는 쿠키를 생성해서 덮어씌움
-		Cookie c = new Cookie("nick", "");
-		// 유지시간을 0초로 설정
-		c.setMaxAge(0);
-		// 쿠키를 보냄
-		response.addCookie(c);
-		// 화면 전환(새로 요청)
+		// 1. 기존 세션 사용 (false)
+		HttpSession session = request.getSession(false); // 세션 없으면 null 반환
+		System.out.println("세션 있니? " + session);
+		// 2. 기본 값 위에 덮어쓰기
+		if(session != null) { // 세션이 있다면
+			session.setAttribute("member_id", "admin");
+		}
 		response.sendRedirect("/");
 	}
 
