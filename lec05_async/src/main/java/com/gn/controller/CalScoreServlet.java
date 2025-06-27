@@ -1,12 +1,13 @@
 package com.gn.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.PrintWriter;
 
 @WebServlet("/calScore")
 public class CalScoreServlet extends HttpServlet {
@@ -43,16 +44,12 @@ public class CalScoreServlet extends HttpServlet {
 		}
 		
 		int sum = kor + eng + math;
-		int avg = sum / 3 ;
-		String msg = "";
+		double avg = (double) sum / 3 ;
+		String avgStr = String.format("%.2f", avg);
+		String msg = (avg >= 60 && !((kor < 40) || (eng < 40) || (math < 40))) ? 
+					 "합격입니다!" : "불합격입니다...";
 		
-		if(avg >= 60 && !((kor < 40) || (eng < 40) || (math < 40))) {
-			msg = "합격입니다!";
-		} else {
-			msg = "불합격입니다...";
-		}
-		
-		text = "총점: " + sum + " 평균: " + avg + " 으로 " + msg;
+		text = "총점: " + sum + " 평균: " + avgStr + " 으로 " + msg;
 		System.out.println("text: " + text);
 		
 		// 3) 통로로 값 내보내기
