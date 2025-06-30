@@ -17,3 +17,5 @@ bin
 .project
 Servers/
 Servers2/
+
+.properties
