@@ -26,5 +26,16 @@
 	 	<input type="number" name="starNumber">
 	 	<button>별찍기</button>
 	 </form>
+	 
+	 <!-- 
+	 	입력된 이름이 포함된 모든 학생의 정보를 화면 또는 console에 출력
+	 	화면: studentSearch.jsp 만들어서 출력 또는 표준 출력
+	  -->
+	 <form action="<c:url value='/student/search'/>" method="get">
+	 	<input type="text" name="student_name">
+	 	<input type="submit" value="이름 기준 검색">
+	 </form>
+	 
+	 <a href="/student/insert">학생 등록하러 가기</a>
 </body>
 </html>

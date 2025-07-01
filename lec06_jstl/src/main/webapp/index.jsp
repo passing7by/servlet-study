@@ -154,8 +154,8 @@
 		1. 자료형 선언하지 않음 (무조건 문자열로 들어감)
 		2. 초기값 반드시 작성
 		3. c:set으로 지정한 값을 스크립틀릿에서 꺼내 쓸 수 없음
-		   반대로, 스크립틀릿에서 setting한 값은 jstl에서 꺼내 쓸 수 있음
-	 -->
+			반대로, 스크립틀릿에서 setting한 값은 jstl에서 꺼내 쓸 수 있음
+	-->
 	<c:set var="num3" value="10" scope="page"/>
 	<c:set var="num4" value="20"/>
 	<c:set var="plus" value="${ num3 + num4 }"/>
