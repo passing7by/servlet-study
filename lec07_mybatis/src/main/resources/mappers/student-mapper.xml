@@ -3,37 +3,51 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gn.mapper.StudentMapper">
-	<select id="selectAll" resultType="com.gn.dto.Student">
-		SELECT student_no AS studentNo,
-			   student_name AS studentName,
-			   student_age AS studentAge
+	<resultMap id="studentResultMap" type="com.gn.dto.Student">
+		<result property="studentNo" column="student_no"/>
+		<result property="studentName" column="student_name"/>
+		<result property="studentAge" column="student_age"/>
+	</resultMap>
+	
+	<select id="selectAll" resultMap="studentResultMap">
+		SELECT *
 		FROM student
 	</select>
-	<select id="selectOne" resultType="com.gn.dto.Student" parameterType="_int">
+	<!-- 주의: *를 사용하면, 클래스에 존재하지 않는 컬럼을 테이블에서 조회할 수는 없음 -->
+	
+	<select id="selectOne" resultMap="studentResultMap" parameterType="_int">
 		SELECT student_no AS studentNo,
-			   student_name AS studentName,
-			   student_age AS studentAge
-	    FROM student
-	    WHERE student_no = #{studentNo}
+			student_name AS studentName,
+			student_age AS studentAge
+		FROM student
+		<where>
+			student_no = #{studentNo}
+		</where>
 	</select>
-	<select id="selectAllByName" resultType="com.gn.dto.Student" parameterType="string">
+	
+	<select id="selectAllByName" resultMap="studentResultMap" parameterType="string">
 		SELECT student_no AS studentNo,
-			   student_name AS studentName,
-			   student_age AS studentAge
-	    FROM student
-	    WHERE student_name
-	    LIKE CONCAT('%', #{studentName}, '%')
+			student_name AS studentName,
+			student_age AS studentAge
+		FROM student
+		WHERE student_name
+		LIKE CONCAT('%', #{studentName}, '%')
 	</select>
+	
 	<insert id="insert" parameterType="com.gn.dto.Student">
 		INSERT INTO student (student_name, student_age)
 		VALUES (#{studentName}, #{studentAge})
 	</insert>
+	
 	<update id="updateStudent" parameterType="com.gn.dto.Student">
 		UPDATE student
 		SET student_name = #{studentName},
 			student_age = #{studentAge}
-		WHERE student_no = #{studentNo}
+		<where>
+			student_no = #{studentNo}
+		</where>
 	</update>
+	
 	<delete id="deleteStudent" parameterType="_int">
 		DELETE FROM student
 		WHERE student_no = #{studentNo}
